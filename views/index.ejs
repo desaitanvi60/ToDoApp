@@ -1,0 +1,34 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <form action="/todos" method="POST">
+            <input type="text" name="text" placeholder="Add a new task" required>
+            <button type="submit">Add</button>
+        </form>
+        <ul>
+            <% todos.forEach(todo => { %>
+                <li class="<%= todo.completed ? 'completed' : '' %>">
+                    <form action="/todos/toggle/<%= todo._id %>" method="POST" style="display:inline;">
+                        <button type="submit"><%= todo.completed ? 'Undo' : 'Complete' %></button>
+                    </form>
+                    <%= todo.text %>
+                    <form action="/todos/delete/<%= todo._id %>" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>
+
